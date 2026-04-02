@@ -1,8 +1,9 @@
 {
-  "name": "updatehub",
+  "name": "updatehub_",
   "version": "1.0.0",
   "description": "A modern, cross-platform app update manager for Windows & macOS",
   "main": "main.js",
+  "homepage": "https://mani-flac.github.io/updatehub_/",
   "type": "module",
   "scripts": {
     "dev": "concurrently \"npm run dev:vite\" \"npm run dev:electron\"",
@@ -91,7 +92,7 @@
     "publish": {
       "provider": "github",
       "owner": "mani-flac",
-      "repo": "Updatehub"
+      "repo": "updatehub_"
     }
   }
 }
