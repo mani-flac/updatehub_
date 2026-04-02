@@ -1,0 +1,97 @@
+{
+  "name": "updatehub",
+  "version": "1.0.0",
+  "description": "A modern, cross-platform app update manager for Windows & macOS",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:vite\" \"npm run dev:electron\"",
+    "dev:vite": "vite",
+    "dev:electron": "wait-on http://localhost:5173 && electron .",
+    "build": "vite build",
+    "build:electron": "npm run build && electron-builder",
+    "preview": "vite preview",
+    "electron": "electron .",
+    "dist": "npm run build && electron-builder --publish=never",
+    "dist:win": "npm run build && electron-builder --win --publish=never",
+    "dist:mac": "npm run build && electron-builder --mac --publish=never"
+  },
+  "keywords": [
+    "electron",
+    "react",
+    "vite",
+    "app-manager",
+    "update-manager",
+    "winget",
+    "homebrew"
+  ],
+  "author": "UpdateHub Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "concurrently": "^8.2.2",
+    "electron": "^28.1.0",
+    "electron-builder": "^24.9.1",
+    "vite": "^5.1.0",
+    "wait-on": "^7.2.0"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "build": {
+    "appId": "com.updatehub.app",
+    "productName": "UpdateHub",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "dist/**/*",
+      "main.js",
+      "preload.js",
+      "agent.js",
+      "notifications.js",
+      "scheduler.js",
+      "versionUtils.js",
+      "assets/*",
+      "node_modules/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "assets/",
+        "to": "assets/",
+        "filter": ["**/*"]
+      }
+    ],
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["x64", "arm64"]
+        }
+      ],
+      "icon": "assets/icon.png"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "assets/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "mani-flac",
+      "repo": "Updatehub"
+    }
+  }
+}
