@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UpdateHub - Maintain Your System Effortlessly</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-base: #06080e;
+            --indigo-deep: #4f46e5;
+            --indigo-glow: rgba(79, 70, 229, 0.4);
+            --royal-blue: #3b82f6;
+            --teal-bright: #2dd4bf;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-border-hover: rgba(255, 255, 255, 0.15);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- Animated Background --- */
+        .ambient-bg {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #0c111d 0%, #06080e 100%);
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.25;
+            animation: drift 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .blob-1 {
+            width: 700px; height: 700px;
+            background: var(--indigo-deep);
+            top: -200px; right: -200px;
+            animation-duration: 25s;
+        }
+
+        .blob-2 {
+            width: 600px; height: 600px;
+            background: var(--royal-blue);
+            bottom: -150px; left: -150px;
+            animation-delay: -5s;
+        }
+
+        .blob-3 {
+            width: 400px; height: 400px;
+            background: #a855f7;
+            top: 30%; left: 20%;
+            opacity: 0.1;
+            animation-duration: 30s;
+        }
+
+        @keyframes drift {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(100px, 50px) scale(1.1); }
+        }
+
+        /* --- Layout --- */
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        header {
+            padding: 40px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: fadeIn 1s ease;
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-box {
+            width: 32px; height: 32px;
+            background: linear-gradient(135deg, var(--indigo-deep), var(--royal-blue));
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 0 20px var(--indigo-glow);
+        }
+
+        .logo-box::after {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-radius: 4px;
+        }
+
+        /* --- Hero --- */
+        .hero {
+            padding: 100px 0 160px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .badge-main {
+            background: rgba(79, 70, 229, 0.1);
+            border: 1px solid rgba(79, 70, 229, 0.3);
+            padding: 8px 18px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--teal-bright);
+            margin-bottom: 32px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 80px;
+            font-weight: 800;
+            line-height: 1.05;
+            margin-bottom: 28px;
+            letter-spacing: -3px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--indigo-deep) 0%, var(--royal-blue) 40%, var(--teal-bright) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 21px;
+            color: var(--text-secondary);
+            max-width: 720px;
+            margin-bottom: 48px;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        /* --- Download Cards --- */
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 80px;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .dl-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid var(--glass-border);
+            padding: 40px;
+            border-radius: 32px;
+            text-align: left;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dl-card:hover {
+            border-color: var(--glass-border-hover);
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-8px);
+        }
+
+        .dl-card.primary { border-color: rgba(79, 70, 229, 0.3); }
+
+        .dl-icon {
+            width: 48px; height: 48px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+        }
+
+        .dl-info h3 { font-size: 22px; margin-bottom: 4px; }
+        .dl-info p { font-size: 14px; color: var(--text-muted); }
+
+        .btn-dl {
+            width: 100%;
+            padding: 16px;
+            border-radius: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .btn-win { 
+            background: var(--text-primary); 
+            color: var(--bg-base); 
+            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
+        }
+        .btn-win:hover { transform: scale(1.02); box-shadow: 0 15px 30px rgba(255,255,255,0.2); }
+
+        .btn-mac {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+        }
+        .btn-mac:hover { background: var(--glass-bg-hover); }
+
+        /* --- Mockup --- */
+        .app-mockup {
+            width: 100%;
+            max-width: 1000px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 8px;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
+            animation: fadeInUp 1s ease 0.6s backwards;
+            position: relative;
+        }
+
+        .mockup-inner {
+            background: #0d1117;
+            border-radius: 18px;
+            aspect-ratio: 16/10;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* --- Features --- */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            padding-bottom: 160px;
+        }
+
+        .feat-card {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .feat-icon {
+            color: var(--indigo-deep);
+        }
+
+        .feat-card h4 { font-family: 'Outfit', sans-serif; font-size: 20px; }
+        .feat-card p { color: var(--text-secondary); font-size: 16px; }
+
+        /* --- Utils --- */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 900px) {
+            h1 { font-size: 52px; }
+            .download-grid { grid-template-columns: 1fr; }
+            .features { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="ambient-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-box"></div>
+                UpdateHub
+            </div>
+            <a href="https://github.com/mani-flac/updatehub_" target="_blank" class="btn-mac" style="padding: 10px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 14px;">Source Code</a>
+        </header>
+
+        <main class="hero">
+            <div class="badge-main">Final Submission 2026 Ready</div>
+            <h1>The ultimate <br><span class="gradient-text">control center.</span></h1>
+            <p>A unified, high-performance dashboard to manage, update, and discover software via Winget and Homebrew. Real-time syncing, zero bloat.</p>
+            
+            <div class="download-grid">
+                <div class="dl-card primary">
+                    <div class="dl-icon">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M0 3.449L9.75 2.1V11.7H0V3.449zm0 9.15h9.75v9.6L0 20.999v-8.4zm10.65-10.5L24 0v11.7h-13.35V2.099zM24 12.6V24l-13.35-1.95V12.6H24z"/></svg>
+                    </div>
+                    <div class="dl-info">
+                        <h3>Windows</h3>
+                        <p>Stable Build • v1.0.0 (x64)</p>
+                    </div>
+                    <a href="https://github.com/mani-flac/updatehub_/releases/latest/download/UpdateHub.Setup.1.0.0.exe" class="btn-dl btn-win">
+                        Download Installer
+                    </a>
+                </div>
+
+                <div class="dl-card">
+                    <div class="dl-icon">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.67-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.039 2.48-4.5 2.597-4.571-1.428-2.09-3.623-2.324-4.39-2.376-2.001-.156-3.312 1.103-4.304 1.103zM15.53 1.21c.844-1.026 1.416-2.455 1.26-3.87-1.221.052-2.701.818-3.584 1.844-.792.909-1.48 2.364-1.299 3.753 1.364.104 2.766-.701 3.623-1.727z"/></svg>
+                    </div>
+                    <div class="dl-info">
+                        <h3>macOS</h3>
+                        <p>Native Setup • Open Source</p>
+                    </div>
+                    <a href="#how-to" class="btn-dl btn-mac">
+                        Build from Source
+                    </a>
+                </div>
+            </div>
+
+            <div class="app-mockup">
+                <div class="mockup-inner">
+                    <svg width="100%" height="100%" viewBox="0 0 1000 625" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Sidebar -->
+                        <rect x="0" y="0" width="220" height="625" fill="#0c1117"/>
+                        <rect x="20" y="30" width="24" height="24" rx="6" fill="#4f46e5"/>
+                        <rect x="54" y="36" width="80" height="12" rx="4" fill="#30363d"/>
+                        
+                        <rect x="20" y="100" width="180" height="40" rx="10" fill="rgba(79, 70, 229, 0.15)"/>
+                        <circle cx="40" cy="120" r="8" fill="#4f46e5"/>
+                        <rect x="60" y="114" width="60" height="12" rx="4" fill="#f8fafc"/>
+
+                        <circle cx="40" cy="170" r="8" fill="#30363d"/>
+                        <rect x="60" y="164" width="60" height="12" rx="4" fill="#30363d"/>
+                        <circle cx="40" cy="220" r="8" fill="#30363d"/>
+                        <rect x="60" y="214" width="60" height="12" rx="4" fill="#30363d"/>
+
+                        <!-- Content -->
+                        <rect x="220" y="0" width="780" height="625" fill="#0d1117"/>
+                        <!-- Top Bar -->
+                        <rect x="220" y="0" width="780" height="80" fill="#0d1117"/>
+                        <rect x="250" y="30" width="120" height="20" rx="6" fill="#f8fafc"/>
+                        
+                        <!-- Grid Stats -->
+                        <rect x="250" y="110" width="160" height="100" rx="16" fill="#161b22" stroke="rgba(255,255,255,0.05)"/>
+                        <rect x="270" y="130" width="60" height="10" rx="4" fill="#30363d"/>
+                        <rect x="270" y="150" width="40" height="24" rx="6" fill="#f8fafc"/>
+
+                        <rect x="430" y="110" width="160" height="100" rx="16" fill="#161b22" stroke="rgba(255,255,255,0.05)"/>
+                        <rect x="450" y="130" width="60" height="10" rx="4" fill="#30363d"/>
+                        <rect x="450" y="150" width="40" height="24" rx="6" fill="#fbbf24"/>
+
+                        <rect x="610" y="110" width="160" height="100" rx="16" fill="#161b22" stroke="rgba(255,255,255,0.05)"/>
+                        <rect x="630" y="130" width="60" height="10" rx="4" fill="#30363d"/>
+                        <rect x="630" y="150" width="40" height="24" rx="6" fill="#10b981"/>
+
+                        <!-- List Area -->
+                        <rect x="250" y="250" width="710" height="340" rx="20" fill="#161b22" stroke="rgba(255,255,255,0.05)"/>
+                        <rect x="270" y="270" width="100" height="12" rx="4" fill="#30363d"/>
+                        
+                        <!-- List Item 1 -->
+                        <rect x="270" y="310" width="670" height="60" rx="12" fill="rgba(255,255,255,0.02)"/>
+                        <rect x="285" y="325" width="30" height="30" rx="8" fill="#30363d"/>
+                        <rect x="330" y="325" width="80" height="12" rx="4" fill="#f8fafc"/>
+                        <rect x="330" y="343" width="50" height="8" rx="4" fill="#30363d"/>
+                        <rect x="850" y="325" width="70" height="30" rx="8" fill="#4f46e5"/>
+
+                        <!-- List Item 2 -->
+                        <rect x="270" y="380" width="670" height="60" rx="12" fill="transparent" stroke="rgba(255,255,255,0.05)"/>
+                        <rect x="285" y="395" width="30" height="30" rx="8" fill="#30363d"/>
+                        <rect x="330" y="395" width="80" height="12" rx="4" fill="#f8fafc"/>
+                        <rect x="330" y="413" width="50" height="8" rx="4" fill="#30363d"/>
+                    </svg>
+                </div>
+            </div>
+        </main>
+
+        <section class="features">
+            <div class="feat-card">
+                <div class="feat-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h4>Zero Injection Safety</h4>
+                <p>Every command is strictly sanitized and jailed before execution. Secure sync without compromise.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                </div>
+                <h4>Universal Discovery</h4>
+                <p>Connect to global repositories instantly. Search and install millions of packages via Winget and Brew.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m19 9-7 7-7-7"/></svg>
+                </div>
+                <h4>Low End Support</h4>
+                <p>Engineered for efficiency. Lazy loaded components and modular memory management ensure peak performance on 4GB RAM systems.</p>
+            </div>
+        </section>
+
+        <section id="how-to" style="padding-bottom: 160px; text-align: center; border-top: 1px solid var(--glass-border); padding-top: 100px;">
+            <h2 style="font-family: 'Outfit'; font-size: 32px; margin-bottom: 24px;">macOS Submission Guide</h2>
+            <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto 40px;">If you are grading on macOS, please run the application from source to see the full native integration.</p>
+            <div style="background: #0d1117; padding: 32px; border-radius: 20px; display: inline-block; text-align: left; border: 1px solid var(--glass-border); font-family: monospace; font-size: 14px; color: var(--text-primary);">
+                <span style="color: var(--text-muted);"># Clone and Start on Mac</span><br>
+                git clone https://github.com/mani-flac/Updatehub.git<br>
+                cd Updatehub<br>
+                npm install<br>
+                npm run dev
+            </div>
+        </section>
+
+        <footer style="padding: 60px 0; border-top: 1px solid var(--glass-border); color: var(--text-muted); font-size: 13px; display: flex; justify-content: space-between; align-items: center;">
+            <div>&copy; 2026 UpdateHub. Final Submission Release.</div>
+            <div style="display: flex; gap: 24px;">
+                <a href="#" style="color: inherit; text-decoration: none;">Privacy</a>
+                <a href="#" style="color: inherit; text-decoration: none;">Documentation</a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
